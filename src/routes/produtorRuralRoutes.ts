@@ -27,9 +27,49 @@ queueService.init().then(() => {
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/ProdutorRural'
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                     description: The producer's ID.
+ *                   cpf_cnpj:
+ *                     type: string
+ *                     description: CPF or CNPJ of the producer.
+ *                   nome:
+ *                     type: string
+ *                     description: Name of the producer.
+ *       404:
+ *         description: Producers not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: object
+ *                   properties:
+ *                     status:
+ *                       type: integer
+ *                       description: HTTP status code
+ *                     message:
+ *                       type: string
+ *                       description: the error message
  *       500:
  *         description: Internal server error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: object
+ *                   properties:
+ *                     status:
+ *                       type: integer
+ *                       description: HTTP status code
+ *                     message:
+ *                       type: string
+ *                       description: the error message
  */
 router.get('/', getAllProdutores);
 
@@ -54,14 +94,51 @@ router.get('/', getAllProdutores);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/ProdutorRural'
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                   description: The producer's ID.
+ *                 cpf_cnpj:
+ *                   type: string
+ *                   description: CPF or CNPJ of the producer.
+ *                 nome:
+ *                   type: string
+ *                   description: Name of the producer.
  *       404:
  *         description: Producer not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: object
+ *                   properties:
+ *                     status:
+ *                       type: integer
+ *                       description: HTTP status code
+ *                     message:
+ *                       type: string
+ *                       description: the error message
  *       500:
  *         description: Internal server error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: object
+ *                   properties:
+ *                     status:
+ *                       type: integer
+ *                       description: HTTP status code
+ *                     message:
+ *                       type: string
+ *                       description: the error message
  */
 router.get('/:id', getProdutorById);
-
 
 /**
  * @swagger
@@ -70,35 +147,100 @@ router.get('/:id', getProdutorById);
  *    tags:
  *      - Producers
  *    description: Create a new producer
- *    parameters:
- *    - in: body
- *      name: producer
- *      description: The producer to create.
- *      schema:
- *        type: object
- *        required:
- *        - cpf_cnpj
- *        - nome
- *        properties:
- *          cpf_cnpj:
- *            description: CPF or CNPJ of the producer
- *            type: string
- *          nome:
- *            description: Name of the producer
- *            type: string
+ *    requestBody:
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            required:
+ *            - cpf_cnpj
+ *            - nome
+ *            - nomeFazenda
+ *            - cidade
+ *            - estado
+ *            - areaTotalHectares
+ *            - areaAgricultavelHectares
+ *            - areaVegetacaoHectares
+ *            - culturas
+ *            properties:
+ *              cpf_cnpj:
+ *                description: CPF or CNPJ of the producer
+ *                type: string
+ *              nome:
+ *                description: Name of the producer
+ *                type: string
+ *              nomeFazenda:
+ *                description: Name of the farm
+ *                type: string
+ *              cidade:
+ *                description: City where the farm is located
+ *                type: string
+ *              estado:
+ *                description: State where the farm is located
+ *                type: string
+ *              areaTotalHectares:
+ *                description: Total area in hectares
+ *                type: number
+ *              areaAgricultavelHectares:
+ *                description: Total cultivable area in hectares
+ *                type: number
+ *              areaVegetacaoHectares:
+ *                description: Total vegetal area in hectares
+ *                type: number
+ *              culturas:
+ *                description: Array of crop IDs associated with the farm
+ *                type: array
+ *                items:
+ *                  type: integer
  *    responses:
  *      201:
  *        description: Successfully created producer
  *        content:
  *          application/json:
  *            schema:
- *              $ref: '#/components/schemas/ProdutorRural'
+ *              type: object
+ *              properties:
+ *                id:
+ *                  type: integer
+ *                  description: the id of the newly created record
+ *                cpf_cnpj:
+ *                  type: string
+ *                  description: cpf or cnpj of the producer
+ *                nome:
+ *                  type: string
+ *                  description: name of the producer
  *      400:
  *        description: Invalid producer data provided.
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                error:
+ *                  type: object
+ *                  properties:
+ *                    status:
+ *                      type: integer
+ *                      description: HTTP status code
+ *                    message:
+ *                      type: string
+ *                      description: the error message
  *      500:
  *        description: Internal server error.
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                error:
+ *                  type: object
+ *                  properties:
+ *                    status:
+ *                      type: integer
+ *                      description: HTTP status code
+ *                    message:
+ *                      type: string
+ *                      description: the error message
  */
-router.post('/produtorRural',
-    createProdutorRural);
-
+router.post('/produtorRural', createProdutorRural);
 export default router;

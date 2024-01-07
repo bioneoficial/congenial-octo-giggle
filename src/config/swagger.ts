@@ -13,9 +13,61 @@ export const swaggerDefinition = {
                         type: 'integer', example: 1,
                     }, name: {
                         type: 'string', example: 'Joao Bione',
-                    },
+                    }, cpf_cnpj: {
+                        type: 'string', example: '12345678901'
+                    }
                 },
             },
+            Cultura: {
+                type: 'object',
+                properties: {
+                    id: {
+                        type: 'integer',
+                        example: 1
+                    },
+                    nome: {
+                        type: 'string',
+                        example: 'Corn'
+                    }
+                }
+            },
+            Fazenda: {
+                type: 'object',
+                properties: {
+                    id: {
+                        type: 'integer',
+                        example: 1
+                    },
+                    nome: {
+                        type: 'string',
+                        example: 'Farm1'
+                    },
+                    cidade: {
+                        type: 'string',
+                        example: 'City1'
+                    },
+                    estado: {
+                        type: 'string',
+                        example: 'State1'
+                    },
+                    areaTotalHectares: {
+                        type: 'number',
+                        example: 1000
+                    },
+                    areaAgricultavelHectares: {
+                        type: 'number',
+                        example: 500
+                    },
+                    areaVegetacaoHectares: {
+                        type: 'number',
+                        example: 500
+                    },
+                    produtorId: {
+                        type: 'number',
+                        example: 1
+                    }
+                    }
+                }
         },
     },
 };
