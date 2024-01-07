@@ -1,8 +1,9 @@
 import {NextFunction, Request, Response} from 'express';
 import {ProdutorRuralService} from '../services/produtorRuralService';
-import {validateProdutorRuralPost} from "../validators/produtorRural";
+import {validateParamsGetById, validateProdutorRuralPost} from "../validators/produtorRural";
 import {ValidationError} from "../errors/validationError";
 import {CustomError} from "../errors/customError";
+import {ProdutorIdParamSchema} from "../validators/schemas/produtorRural";
 
 const produtorRuralService = new ProdutorRuralService();
 export const getAllProdutores = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -16,16 +17,17 @@ export const getAllProdutores = async (req: Request, res: Response, next: NextFu
 
 export const getProdutorById = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
+        const params = validateParamsGetById(req.params);
         const produtor = await produtorRuralService.findProdutorById(Number(req.params.id));
         if (!produtor) {
-            res.status(404).json({message: 'Produtor não encontrado'});
-            return;
+            throw new CustomError(`Produtor with id "${params.id}" not found`, 404);
         }
         res.json(produtor);
     } catch (error: any) {
         next(error);
     }
 };
+
 
 export const createProdutorRural = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {

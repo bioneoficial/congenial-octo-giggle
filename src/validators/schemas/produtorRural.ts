@@ -50,3 +50,9 @@ export const ProdutorRuralPostSchema = z.object({
         message: "Each cultura must be 1 or greater",
     })),
 });
+
+export const ProdutorIdParamSchema =z.object({
+    id: z.string().transform(Number).refine(value => !isNaN(value) && value >= 1, {
+        message: "id must be a number and 1 or greater",
+    }),
+});
