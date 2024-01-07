@@ -39,6 +39,7 @@ export class ProdutorRuralService {
                 throw new Error('Failed to create produtor rural');
             }
 
+
             if (produtorData.areaAgricultavelHectares + produtorData.areaVegetacaoHectares > produtorData.areaTotalHectares) {
                 throw new Error('The sum of cultivable and vegetation area cannot exceed the total farm area');
             }
@@ -56,6 +57,7 @@ export class ProdutorRuralService {
             for (const culturaId of produtorData.culturas) {
                 await this.culturaService.linkFazendaToCultura(fazenda.id, culturaId);
             }
+
             return produtorRural;
         } catch (error) {
             throw error;
@@ -74,7 +76,6 @@ export class ProdutorRuralService {
         if (cpfCnpj.length !== 11 && cpfCnpj.length !== 14) {
             throw new Error('Invalid CPF/CNPJ length');
         }
-        // Additional CPF/CNPJ format validations can be added here
     }
 
     private async cpfCnpjExists(cpfCnpj: string): Promise<boolean> {

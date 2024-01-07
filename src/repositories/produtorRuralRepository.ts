@@ -46,7 +46,7 @@ export class ProdutorRuralRepository {
 
         try {
             const result = await this.db.executeQuery(query, [cpfCnpj]);
-            if (result.rows.length > 0) {
+            if (result && result.rows && result.rows.length > 0) {
                 return result.rows[0];
             } else {
                 return null;
