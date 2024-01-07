@@ -1,4 +1,4 @@
-import { ProdutorRural } from '../models/produtorRuralModel';
+import {ProdutorRural} from '../models/produtorRuralModel';
 import Database from '../config/dbConfig';
 
 export class ProdutorRuralRepository {

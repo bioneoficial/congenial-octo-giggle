@@ -1,5 +1,5 @@
-import express, { Router } from 'express';
-import { getAllProdutores, getProdutorById } from '../controllers/produtorRuralController';
+import express, {Router} from 'express';
+import {getAllProdutores, getProdutorById} from '../controllers/produtorRuralController';
 import {QueueService} from "../services/queueService";
 
 const router: Router = express.Router();

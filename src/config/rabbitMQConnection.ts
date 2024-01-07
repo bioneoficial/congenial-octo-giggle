@@ -1,12 +1,14 @@
 import amqp from 'amqplib';
 import dotenv from 'dotenv';
+
 dotenv.config();
 
 export class RabbitMQConnection {
     private static instance: RabbitMQConnection;
     private conn: amqp.Connection | null = null;
 
-    private constructor() {}
+    private constructor() {
+    }
 
     public static async getInstance(): Promise<RabbitMQConnection> {
         if (!RabbitMQConnection.instance) {
@@ -14,6 +16,13 @@ export class RabbitMQConnection {
             await RabbitMQConnection.instance.connect();
         }
         return RabbitMQConnection.instance;
+    }
+
+    public getConnection(): amqp.Connection {
+        if (!this.conn) {
+            throw new Error('RabbitMQ connection not established');
+        }
+        return this.conn;
     }
 
     private async connect(): Promise<void> {
@@ -25,12 +34,5 @@ export class RabbitMQConnection {
             console.log(`Retrying in ${10000 / 1000} seconds...`);
             setTimeout(() => this.connect(), 10000);
         }
-    }
-
-    public getConnection(): amqp.Connection {
-        if (!this.conn) {
-            throw new Error('RabbitMQ connection not established');
-        }
-        return this.conn;
     }
 }

@@ -1,4 +1,4 @@
-import { RabbitMQConnection } from '../config/rabbitMQConnection';
+import {RabbitMQConnection} from '../config/rabbitMQConnection';
 
 export class QueueService {
     private connection: RabbitMQConnection | null = null;

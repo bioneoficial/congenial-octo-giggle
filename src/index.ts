@@ -1,4 +1,4 @@
-import express, { Application } from 'express';
+import express, {Application} from 'express';
 import bodyParser from 'body-parser';
 import produtorRuralRoutes from './routes/produtorRuralRoutes';
 import swaggerUi from 'swagger-ui-express';
@@ -11,8 +11,7 @@ dotenv.config();
 const app: Application = express();
 
 const options = {
-    swaggerDefinition,
-    apis: [`${__dirname}/routes/*.ts`],
+    swaggerDefinition, apis: [`${__dirname}/routes/*.ts`],
 };
 
 const swaggerSpec = swaggerJsDoc(options);

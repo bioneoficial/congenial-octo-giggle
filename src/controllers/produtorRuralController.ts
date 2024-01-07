@@ -1,5 +1,5 @@
-import { Request, Response } from 'express';
-import { ProdutorRuralService} from '../services/produtorRuralService';
+import {Request, Response} from 'express';
+import {ProdutorRuralService} from '../services/produtorRuralService';
 
 const produtorRuralService = new ProdutorRuralService();
 export const getAllProdutores = async (req: Request, res: Response): Promise<void> => {
@@ -7,7 +7,7 @@ export const getAllProdutores = async (req: Request, res: Response): Promise<voi
         const produtores = await produtorRuralService.findAllProdutores();
         res.json(produtores);
     } catch (error: any) {
-        res.status(500).json({ message: error?.message ?? 'An unexpected error occurred.' });
+        res.status(500).json({message: error?.message ?? 'An unexpected error occurred.'});
     }
 };
 

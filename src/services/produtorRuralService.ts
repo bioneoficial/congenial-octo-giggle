@@ -1,5 +1,5 @@
-import { ProdutorRural } from '../models/produtorRuralModel';
-import { ProdutorRuralRepository } from '../repositories/produtorRuralRepository';
+import {ProdutorRural} from '../models/produtorRuralModel';
+import {ProdutorRuralRepository} from '../repositories/produtorRuralRepository';
 
 export class ProdutorRuralService {
     private produtorRuralRepository: ProdutorRuralRepository;
