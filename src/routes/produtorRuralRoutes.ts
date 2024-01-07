@@ -92,7 +92,7 @@ router.get('/:id', getProdutorById);
  *        content:
  *          application/json:
  *            schema:
- *              $ref: '#/components/schemas/IProdutorRural'
+ *              $ref: '#/components/schemas/ProdutorRural'
  *      400:
  *        description: Invalid producer data provided.
  *      500:

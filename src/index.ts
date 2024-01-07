@@ -12,7 +12,7 @@ dotenv.config();
 const app: Application = express();
 
 const options = {
-    swaggerDefinition, apis: [`${__dirname}/routes/*.ts`],
+    swaggerDefinition, apis: [`${__dirname}/routes/*.js`],
 };
 
 const swaggerSpec = swaggerJsDoc(options);
@@ -20,7 +20,6 @@ const swaggerSpec = swaggerJsDoc(options);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use(bodyParser.json());
-
 app.use('/produtores-rurais', produtorRuralRoutes);
 
 app.use(errorHandler);
