@@ -13,7 +13,7 @@ queueService.init().then(() => {
 
 /**
  * @swagger
- * /producers:
+ * /produtores-rurais:
  *   get:
  *     tags:
  *       - Producers
@@ -66,7 +66,7 @@ router.get('/', getAllProdutores);
 
 /**
  * @swagger
- * /producers/{id}:
+ * /produtores-rurais/{id}:
  *   get:
  *     tags:
  *       - Producers
@@ -124,7 +124,7 @@ router.get('/:id', getProdutorById);
 
 /**
  * @swagger
- * /producers/produtorRural:
+ * /produtores-rurais/produtorRural:
  *  post:
  *    tags:
  *      - Producers
