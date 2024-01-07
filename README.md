@@ -2,7 +2,9 @@
 
 ## Description
 
-Brain Agriculture API is a backend service designed to manage agricultural data, including producer information, farm details, and crop types. It is built with Node.js and Express and uses PostgreSQL for data persistence.
+Brain Agriculture API is a backend service designed to manage agricultural data, including producer information, farm
+details, and crop types. It uses Node.js, Express, PostgreSQL for data persistence and RabbitMQ for managing message
+queues.
 
 ## Technologies and Tools
 
@@ -13,6 +15,8 @@ Brain Agriculture API is a backend service designed to manage agricultural data,
     - Docker and Docker Compose
     - PostgreSQL
     - -npm
+    - RabbitMQ
+    - Zod: JavaScript schema validation library
 
 - **Production:**
     - Same as development, with production-level configurations for databases and other services.
@@ -27,7 +31,8 @@ Brain Agriculture API is a backend service designed to manage agricultural data,
 
 2. **Node.js**: This project uses Node.js version 16 or later.
 
-3. **.env File**: Duplicate the `.env.example` file and rename it to `.env`. Adjust the variables to match your environment setup.
+3. **.env File**: Duplicate the `.env.example` file and rename it to `.env`. Adjust the variables to match your
+   environment setup.
 
    Example:
     ```
@@ -45,11 +50,13 @@ Brain Agriculture API is a backend service designed to manage agricultural data,
 To start the entire stack (application and database) with Docker Compose, run the following command:
 
 ```bash
-docker-compose up
+docker-compose up --build
 ```
+
 This will set up the PostgreSQL database and run the Node.js application in containers.
 
 ## Manually
+
 If you wish to run the application without Docker:
 
 Install dependencies:
@@ -71,6 +78,7 @@ npm start
 ```
 
 ## Running Tests
+
 To run tests, execute the following command:
 
 ```bash
@@ -80,9 +88,11 @@ npm test
 This will run all Jest test suites found in the tests directory.
 
 ## API Documentation
- - Swagger
+
+- Swagger
+
 ```bash
-link
+http://localhost:3000/api-docs/
 ```
 
 Contributing

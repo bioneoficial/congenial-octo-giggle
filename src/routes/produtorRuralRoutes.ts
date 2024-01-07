@@ -63,7 +63,41 @@ router.get('/', getAllProdutores);
 router.get('/:id', getProdutorById);
 
 
-
+/**
+ * @swagger
+ * /producers/produtorRural:
+ *  post:
+ *    tags:
+ *      - Producers
+ *    description: Create a new producer
+ *    parameters:
+ *    - in: body
+ *      name: producer
+ *      description: The producer to create.
+ *      schema:
+ *        type: object
+ *        required:
+ *        - cpf_cnpj
+ *        - nome
+ *        properties:
+ *          cpf_cnpj:
+ *            description: CPF or CNPJ of the producer
+ *            type: string
+ *          nome:
+ *            description: Name of the producer
+ *            type: string
+ *    responses:
+ *      201:
+ *        description: Successfully created producer
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/IProdutorRural'
+ *      400:
+ *        description: Invalid producer data provided.
+ *      500:
+ *        description: Internal server error.
+ */
 router.post('/produtorRural',
     createProdutorRural);
 
