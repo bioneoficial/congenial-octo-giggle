@@ -6,6 +6,8 @@ import swaggerJsDoc from 'swagger-jsdoc';
 import {swaggerDefinition} from './config/swagger';
 import dotenv from 'dotenv';
 import errorHandler from "./middleware/errorHandler";
+import cors from 'cors';
+
 
 dotenv.config();
 
@@ -19,6 +21,7 @@ const swaggerSpec = swaggerJsDoc(options);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use('/produtores-rurais', produtorRuralRoutes);
 
