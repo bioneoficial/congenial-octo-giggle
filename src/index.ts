@@ -21,7 +21,7 @@ const swaggerSpec = swaggerJsDoc(options);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-app.use(cors());
+app.use(cors({origin: '*'}));
 app.use(bodyParser.json());
 app.use('/produtores-rurais', produtorRuralRoutes);
 
