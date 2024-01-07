@@ -5,6 +5,7 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerJsDoc from 'swagger-jsdoc';
 import {swaggerDefinition} from './config/swagger';
 import dotenv from 'dotenv';
+import errorHandler from "./middleware/errorHandler";
 
 dotenv.config();
 
@@ -21,6 +22,8 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use(bodyParser.json());
 
 app.use('/produtores-rurais', produtorRuralRoutes);
+
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 3000;
 
