@@ -12,7 +12,6 @@ export class FazendaService {
         if (fazendaData.areaTotalHectares < fazendaData.areaAgricultavelHectares + fazendaData.areaVegetacaoHectares) {
             throw new Error('Total area cannot be less than the sum of agricultable and vegetation areas');
         }
-
         return this.fazendaRepository.create({
             nome: fazendaData.nome,
             cidade: fazendaData.cidade,

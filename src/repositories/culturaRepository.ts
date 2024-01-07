@@ -10,7 +10,11 @@ export class CulturaRepository {
     public async findById(culturaId: number): Promise<any> {
         const query = 'SELECT * FROM culturas WHERE id = $1';
         const result = await this.db.executeQuery(query, [culturaId]);
-        return result.rows[0];
+        if (result && result.length > 0) {
+            return result[0];
+        } else {
+            return null;
+        }
     }
 
     public async linkToFazenda(fazendaId: number, culturaId: number): Promise<void> {
