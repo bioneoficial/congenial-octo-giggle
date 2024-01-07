@@ -2,7 +2,7 @@ import {IProdutorRural, IProdutorRuralPost} from '../models/produtorRuralModel';
 import {ProdutorRuralRepository} from '../repositories/produtorRuralRepository';
 import {FazendaService} from "./fazendaService";
 import {CulturaService} from "./culturaService";
-import {NextFunction} from "express";
+import {CustomError} from "../errors/customError";
 
 export class ProdutorRuralService {
     private produtorRuralRepository: ProdutorRuralRepository;
@@ -25,14 +25,15 @@ export class ProdutorRuralService {
 
     public async createProdutor(produtorData: IProdutorRuralPost): Promise<IProdutorRural | undefined> {
         try {
-            this.validateCreateProdutorData(produtorData);
+            console.log(produtorData)
+             await this.validateCreateProdutorData(produtorData);
 
             const produtorRural = await this.produtorRuralRepository.create({
                 cpf_cnpj: produtorData.cpf_cnpj, nome: produtorData.nome
             });
 
             if (!produtorRural.id) {
-                throw new Error('Failed to create produtor rural');
+                throw new CustomError('Failed to create produtor rural', 400);
             }
 
 
@@ -55,13 +56,13 @@ export class ProdutorRuralService {
     private async validateCreateProdutorData(produtorData: IProdutorRuralPost): Promise<void> {
         this.validateCpfCnpj(produtorData.cpf_cnpj);
 
-        if (await this.cpfCnpjExists(produtorData.cpf_cnpj)) {
-            throw new Error('CPF/CNPJ already exists');
-        }
+            if (await this.cpfCnpjExists(produtorData.cpf_cnpj)) {
+                throw new CustomError('CPF/CNPJ already exists', 400);
+            }
 
-        if (produtorData.areaAgricultavelHectares + produtorData.areaVegetacaoHectares > produtorData.areaTotalHectares) {
-            throw new Error('The sum of cultivable and vegetation area cannot exceed the total farm area');
-        }
+            if (produtorData.areaAgricultavelHectares + produtorData.areaVegetacaoHectares > produtorData.areaTotalHectares) {
+                throw new CustomError('The sum of cultivable and vegetation area cannot exceed the total farm area', 400);
+            }
     }
 
     public async updateProdutor(id: number, produtorData: IProdutorRural): Promise<IProdutorRural | null> {
@@ -73,8 +74,12 @@ export class ProdutorRuralService {
     }
 
     private validateCpfCnpj(cpfCnpj: string): void {
-        if (cpfCnpj.length !== 11 && cpfCnpj.length !== 14) {
-            throw new Error('Invalid CPF/CNPJ length');
+        try {
+            if (cpfCnpj.length !== 11 && cpfCnpj.length !== 14) {
+                throw new CustomError('Invalid CPF/CNPJ length', 400);
+            }
+        } catch (error) {
+            throw error;
         }
     }
 

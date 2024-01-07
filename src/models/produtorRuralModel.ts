@@ -2,6 +2,9 @@ export interface IProdutorRural {
     id?: number;
     cpf_cnpj: string;
     nome: string;
+    created_at?: Date;
+    updated_at?: Date;
+    deleted_at?: Date | null;
 }
 
 export interface IProdutorRuralPost {
@@ -30,4 +33,7 @@ export interface IFazenda {
     areaAgricultavelHectares: number;
     areaVegetacaoHectares: number;
     produtorId: number;
+    created_at?: Date;
+    updated_at?: Date;
+    deleted_at?: Date | null;
 }

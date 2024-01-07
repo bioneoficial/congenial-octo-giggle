@@ -34,8 +34,7 @@ export const createProdutorRural = async (req: Request, res: Response, next: Nex
         const validatedData = validateProdutorRuralPost(req.body);
         const produtorRural = await produtorRuralService.createProdutor(validatedData);
         res.status(201).json(produtorRural);
-    } catch (error: any) {
-        error instanceof ValidationError ? next(new ValidationError('Invalid data provided for Produtor Rural creation')) :
-            next(new CustomError('An error occurred during Produtor Rural creation'));
+    } catch (error: unknown) {
+        next(error);
     }
 };
