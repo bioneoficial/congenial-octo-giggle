@@ -40,4 +40,20 @@ export class ProdutorRuralRepository {
         const query = 'DELETE FROM produtores_rurais WHERE id = $1;';
         await this.db.executeQuery(query, [id]);
     }
+
+    public async findByCpfCnpj(cpfCnpj: string): Promise<ProdutorRural | null> {
+        const query = 'SELECT * FROM produtores_rurais WHERE cpf_cnpj = $1';
+
+        try {
+            const result = await this.db.executeQuery(query, [cpfCnpj]);
+            if (result.rows.length > 0) {
+                return result.rows[0];
+            } else {
+                return null;
+            }
+        } catch (error) {
+            console.error('Error in findByCpfCnpj:', error);
+            throw new Error('Error accessing the database');
+        }
+    }
 }

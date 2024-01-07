@@ -1,5 +1,5 @@
 import express, {Router} from 'express';
-import {getAllProdutores, getProdutorById} from '../controllers/produtorRuralController';
+import {createProdutorRural, getAllProdutores, getProdutorById} from '../controllers/produtorRuralController';
 import {QueueService} from "../services/queueService";
 
 const router: Router = express.Router();
@@ -61,5 +61,10 @@ router.get('/', getAllProdutores);
  *         description: Internal server error.
  */
 router.get('/:id', getProdutorById);
+
+
+
+router.post('/produtorRural',
+    createProdutorRural);
 
 export default router;
