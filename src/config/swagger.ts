@@ -15,7 +15,26 @@ export const swaggerDefinition = {
                         type: 'string', example: 'Joao Bione',
                     }, cpf_cnpj: {
                         type: 'string', example: '12345678901'
-                    }
+                    },
+                    created_at: {
+                        type: 'string',
+                        example: '2023-01-14T03:20:00Z',
+                        format: 'date-time',
+                        description: 'Timestamp denoting when the record was created.',
+                    },
+                    updated_at: {
+                        type: 'string',
+                        example: '2023-01-14T03:20:00Z',
+                        format: 'date-time',
+                        description: 'Timestamp denoting the last update made to the record.',
+                    },
+                    deleted_at: {
+                        type: 'string',
+                        nullable: true,
+                        example: '2023-01-14T03:20:00Z',
+                        format: 'date-time',
+                        description: 'Timestamp denoting when the record was deleted.',
+                    },
                 },
             },
             Cultura: {
@@ -65,7 +84,26 @@ export const swaggerDefinition = {
                     produtorId: {
                         type: 'number',
                         example: 1
-                    }
+                    },
+                    created_at: {
+                        type: 'string',
+                        example: '2023-01-14T03:20:00Z',
+                        format: 'date-time',
+                        description: 'Timestamp denoting when the record was created.',
+                    },
+                    updated_at: {
+                        type: 'string',
+                        example: '2023-01-14T03:20:00Z',
+                        format: 'date-time',
+                        description: 'Timestamp denoting the last update made to the record.',
+                    },
+                    deleted_at: {
+                        type: 'string',
+                        nullable: true,
+                        example: '2023-01-14T03:20:00Z',
+                        format: 'date-time',
+                        description: 'Timestamp denoting when the record was deleted.',
+                    },
                     }
                 }
         },

@@ -27,17 +27,8 @@ queueService.init().then(() => {
  *             schema:
  *               type: array
  *               items:
- *                 type: object
- *                 properties:
- *                   id:
- *                     type: integer
- *                     description: The producer's ID.
- *                   cpf_cnpj:
- *                     type: string
- *                     description: CPF or CNPJ of the producer.
- *                   nome:
- *                     type: string
- *                     description: Name of the producer.
+ *                   $ref:
+ *                      '#/components/schemas/ProdutorRural'
  *       404:
  *         description: Producers not found.
  *         content:
@@ -94,17 +85,8 @@ router.get('/', getAllProdutores);
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 id:
- *                   type: integer
- *                   description: The producer's ID.
- *                 cpf_cnpj:
- *                   type: string
- *                   description: CPF or CNPJ of the producer.
- *                 nome:
- *                   type: string
- *                   description: Name of the producer.
+ *               $ref:
+ *                  '#/components/schemas/ProdutorRural'
  *       404:
  *         description: Producer not found.
  *         content:
@@ -209,6 +191,19 @@ router.get('/:id', getProdutorById);
  *                nome:
  *                  type: string
  *                  description: name of the producer
+ *                created_at:
+ *                  type: string
+ *                  format: date-time
+ *                  description: Timestamp of when the record was created.
+ *                updated_at:
+ *                  type: string
+ *                  format: date-time
+ *                  description: Timestamp of the last update to the record.
+ *                deleted_at:
+ *                  type: string
+ *                  format: date-time
+ *                  nullable: true
+ *                  description: Timestamp of when the record was deleted. Null if the record has not been deleted.
  *      400:
  *        description: Invalid producer data provided.
  *        content:
