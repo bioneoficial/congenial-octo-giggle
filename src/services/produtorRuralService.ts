@@ -1,4 +1,4 @@
-import {ProdutorRural, ProdutorRuralPost} from '../models/produtorRuralModel';
+import {IProdutorRural, IProdutorRuralPost} from '../models/produtorRuralModel';
 import {ProdutorRuralRepository} from '../repositories/produtorRuralRepository';
 import {FazendaService} from "./fazendaService";
 import {CulturaService} from "./culturaService";
@@ -15,21 +15,17 @@ export class ProdutorRuralService {
         this.culturaService = new CulturaService();
     }
 
-    public async findAllProdutores(): Promise<ProdutorRural[]> {
+    public async findAllProdutores(): Promise<IProdutorRural[]> {
         return this.produtorRuralRepository.findAll();
     }
 
-    public async findProdutorById(id: number): Promise<ProdutorRural | null> {
+    public async findProdutorById(id: number): Promise<IProdutorRural | null> {
         return this.produtorRuralRepository.findById(id);
     }
 
-    public async createProdutor(produtorData: ProdutorRuralPost): Promise<ProdutorRural | undefined> {
+    public async createProdutor(produtorData: IProdutorRuralPost): Promise<IProdutorRural | undefined> {
         try {
-            this.validateCpfCnpj(produtorData.cpf_cnpj);
-
-            if (await this.cpfCnpjExists(produtorData.cpf_cnpj)) {
-                throw new Error('CPF/CNPJ already exists');
-            }
+            this.validateCreateProdutorData(produtorData);
 
             const produtorRural = await this.produtorRuralRepository.create({
                 cpf_cnpj: produtorData.cpf_cnpj, nome: produtorData.nome
@@ -40,17 +36,9 @@ export class ProdutorRuralService {
             }
 
 
-            if (produtorData.areaAgricultavelHectares + produtorData.areaVegetacaoHectares > produtorData.areaTotalHectares) {
-                throw new Error('The sum of cultivable and vegetation area cannot exceed the total farm area');
-            }
-
             const fazenda = await this.fazendaService.createFazenda({
+                ...produtorData,
                 nome: produtorData.nomeFazenda,
-                cidade: produtorData.cidade,
-                estado: produtorData.estado,
-                areaTotalHectares: produtorData.areaTotalHectares,
-                areaAgricultavelHectares: produtorData.areaAgricultavelHectares,
-                areaVegetacaoHectares: produtorData.areaVegetacaoHectares,
                 produtorId: produtorRural.id
             });
 
@@ -64,7 +52,19 @@ export class ProdutorRuralService {
         }
     }
 
-    public async updateProdutor(id: number, produtorData: ProdutorRural): Promise<ProdutorRural | null> {
+    private async validateCreateProdutorData(produtorData: IProdutorRuralPost): Promise<void> {
+        this.validateCpfCnpj(produtorData.cpf_cnpj);
+
+        if (await this.cpfCnpjExists(produtorData.cpf_cnpj)) {
+            throw new Error('CPF/CNPJ already exists');
+        }
+
+        if (produtorData.areaAgricultavelHectares + produtorData.areaVegetacaoHectares > produtorData.areaTotalHectares) {
+            throw new Error('The sum of cultivable and vegetation area cannot exceed the total farm area');
+        }
+    }
+
+    public async updateProdutor(id: number, produtorData: IProdutorRural): Promise<IProdutorRural | null> {
         return this.produtorRuralRepository.update(id, produtorData);
     }
 

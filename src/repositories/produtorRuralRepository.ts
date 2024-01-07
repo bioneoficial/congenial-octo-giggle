@@ -1,4 +1,4 @@
-import {ProdutorRural} from '../models/produtorRuralModel';
+import {IProdutorRural} from '../models/produtorRuralModel';
 import Database from '../config/dbConfig';
 
 export class ProdutorRuralRepository {
@@ -8,32 +8,32 @@ export class ProdutorRuralRepository {
         this.db = Database.getInstance();
     }
 
-    public async findAll(): Promise<ProdutorRural[]> {
+    public async findAll(): Promise<IProdutorRural[]> {
         const query = 'SELECT * FROM produtores_rurais;';
         const rows = await this.db.executeQuery(query);
-        return rows as ProdutorRural[];
+        return rows as IProdutorRural[];
     }
 
-    public async findById(id: number): Promise<ProdutorRural | null> {
+    public async findById(id: number): Promise<IProdutorRural | null> {
         const query = 'SELECT * FROM produtores_rurais WHERE id = $1;';
         const rows = await this.db.executeQuery(query, [id]);
         if (rows.length === 0) return null;
-        return rows[0] as ProdutorRural;
+        return rows[0] as IProdutorRural;
     }
 
-    public async create(produtor: ProdutorRural): Promise<ProdutorRural> {
+    public async create(produtor: IProdutorRural): Promise<IProdutorRural> {
         const query = 'INSERT INTO produtores_rurais (cpf_cnpj, nome) VALUES ($1, $2) RETURNING *;';
         const values = [produtor.cpf_cnpj, produtor.nome];
         const rows = await this.db.executeQuery(query, values);
-        return rows[0] as ProdutorRural;
+        return rows[0] as IProdutorRural;
     }
 
-    public async update(id: number, produtorData: ProdutorRural): Promise<ProdutorRural | null> {
+    public async update(id: number, produtorData: IProdutorRural): Promise<IProdutorRural | null> {
         const query = 'UPDATE produtores_rurais SET cpf_cnpj = $1, nome = $2 WHERE id = $3 RETURNING *;';
         const values = [produtorData.cpf_cnpj, produtorData.nome, id];
         const rows = await this.db.executeQuery(query, values);
         if (rows.length === 0) return null;
-        return rows[0] as ProdutorRural;
+        return rows[0] as IProdutorRural;
     }
 
     public async delete(id: number): Promise<void> {
@@ -41,7 +41,7 @@ export class ProdutorRuralRepository {
         await this.db.executeQuery(query, [id]);
     }
 
-    public async findByCpfCnpj(cpfCnpj: string): Promise<ProdutorRural | null> {
+    public async findByCpfCnpj(cpfCnpj: string): Promise<IProdutorRural | null> {
         const query = 'SELECT * FROM produtores_rurais WHERE cpf_cnpj = $1';
 
         try {

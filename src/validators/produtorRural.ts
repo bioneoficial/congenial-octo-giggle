@@ -1,7 +1,7 @@
-import {ProdutorRuralPost} from "../models/produtorRuralModel";
+import {IProdutorRuralPost} from "../models/produtorRuralModel";
 import {ProdutorRuralPostSchema} from "./schemas/produtorRural";
 
-export const validateProdutorRuralPost = (data: any): ProdutorRuralPost => {
+export const validateProdutorRuralPost = (data: any): IProdutorRuralPost => {
     const result = ProdutorRuralPostSchema.safeParse(data);
 
     if (!result.success) {

@@ -1,5 +1,5 @@
 import {z, ZodObject} from "zod";
-import {ProdutorRuralPost} from "../../models/produtorRuralModel";
+import {IProdutorRuralPost} from "../../models/produtorRuralModel";
 
 export const ProdutorRuralPostSchema = z.object({
     cpf_cnpj: z.string({

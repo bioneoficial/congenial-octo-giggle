@@ -1,4 +1,4 @@
-export interface ProdutorRural {
+export interface IProdutorRural {
     id?: number;
     cpf_cnpj: string;
     nome: string;
@@ -11,7 +11,7 @@ export interface ProdutorRural {
     // culturasPlantadas: Cultura[];
 }
 
-export interface ProdutorRuralPost {
+export interface IProdutorRuralPost {
     cpf_cnpj: string;
     nome: string;
     nomeFazenda: string;
@@ -23,12 +23,12 @@ export interface ProdutorRuralPost {
     culturas: number[];
 }
 
-export interface Cultura {
+export interface ICultura {
     id: number;
     nome: string;
 }
 
-export interface Fazenda {
+export interface IFazenda {
     id?: number;
     nome: string;
     cidade: string;
