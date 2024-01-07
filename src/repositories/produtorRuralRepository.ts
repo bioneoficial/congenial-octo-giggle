@@ -1,5 +1,6 @@
 import {IProdutorRural} from '../models/produtorRuralModel';
 import Database from '../config/dbConfig';
+import {ResourceNotFoundError} from "../errors/resourceNotFoundError";
 
 export class ProdutorRuralRepository {
     private db: Database;
@@ -17,7 +18,9 @@ export class ProdutorRuralRepository {
     public async findById(id: number): Promise<IProdutorRural | null> {
         const query = 'SELECT * FROM produtores_rurais WHERE id = $1;';
         const rows = await this.db.executeQuery(query, [id]);
-        if (rows.length === 0) return null;
+        if (rows.length === 0) {
+            throw new ResourceNotFoundError(`ProdutorRural with id ${id} not found`);
+        }
         return rows[0] as IProdutorRural;
     }
 

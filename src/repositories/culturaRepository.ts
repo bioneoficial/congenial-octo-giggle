@@ -1,4 +1,5 @@
 import Database from "../config/dbConfig";
+import {ResourceNotFoundError} from "../errors/resourceNotFoundError";
 
 export class CulturaRepository {
     private db: Database;
@@ -10,11 +11,11 @@ export class CulturaRepository {
     public async findById(culturaId: number): Promise<any> {
         const query = 'SELECT * FROM culturas WHERE id = $1';
         const result = await this.db.executeQuery(query, [culturaId]);
-        if (result && result.length > 0) {
-            return result[0];
-        } else {
-            return null;
+        if (!result || result.length === 0) {
+            throw new ResourceNotFoundError(`Cultura with id ${culturaId} not found`);
         }
+
+        return result[0];
     }
 
     public async linkToFazenda(fazendaId: number, culturaId: number): Promise<void> {
