@@ -28,7 +28,7 @@ queueService.init().then(() => {
  *               type: array
  *               items:
  *                   $ref:
- *                      '#/components/schemas/ProdutorRural'
+ *                      '#/components/schemas/GetProdutorRural'
  *       404:
  *         description: Producers not found.
  *         content:
@@ -86,7 +86,7 @@ router.get('/', getAllProdutores);
  *           application/json:
  *             schema:
  *               $ref:
- *                  '#/components/schemas/ProdutorRural'
+ *                  '#/components/schemas/GetProdutorRural'
  *       404:
  *         description: Producer not found.
  *         content:
