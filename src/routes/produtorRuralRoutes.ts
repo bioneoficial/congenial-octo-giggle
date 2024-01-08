@@ -1,5 +1,10 @@
 import express, {Router} from 'express';
-import {createProdutorRural, getAllProdutores, getProdutorById} from '../controllers/produtorRuralController';
+import {
+    createProdutorRural,
+    deleteProdutorById,
+    getAllProdutores,
+    getProdutorById
+} from '../controllers/produtorRuralController';
 import {QueueService} from "../services/queueService";
 
 const router: Router = express.Router();
@@ -238,4 +243,45 @@ router.get('/:id', getProdutorById);
  *                      description: the error message
  */
 router.post('/produtorRural', createProdutorRural);
+
+/**
+ * @swagger
+ * /produtores-rurais/{id}:
+ *   delete:
+ *     tags:
+ *       - Producers
+ *     summary: Delete a producer by ID
+ *     description: Soft deletes a single producer's details by their ID (sets deleted_at to current timestamp).
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: The producer's ID.
+ *     responses:
+ *       200:
+ *         description: Successfully deleted a producer.
+ *       404:
+ *         description: Producer not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   description: the error message
+ *       500:
+ *         description: Internal server error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   description: the error message
+ */
+router.delete('/:id', deleteProdutorById);
 export default router;

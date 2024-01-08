@@ -13,4 +13,9 @@ export class FazendaRepository {
         const result = await this.db.executeQuery(query, values);
         return result[0];
     }
+
+    public async deleteByProdutorId(produtorId: number): Promise<void> {
+        const query = 'UPDATE fazendas SET deleted_at = NOW() WHERE produtor_id = $1;';
+        await this.db.executeQuery(query, [produtorId]);
+    }
 }

@@ -37,3 +37,13 @@ export const createProdutorRural = async (req: Request, res: Response, next: Nex
         next(error);
     }
 };
+
+export const deleteProdutorById = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+        const id = Number(req.params.id);
+        await produtorRuralService.deleteProdutor(id);
+        res.json({ message: `Produtor with id ${id} was successfully deleted`});
+    } catch (error: any) {
+        next(error);
+    }
+};

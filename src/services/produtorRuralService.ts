@@ -70,6 +70,7 @@ export class ProdutorRuralService {
     }
 
     public async deleteProdutor(id: number): Promise<void> {
+        await this.fazendaService.deleteByProdutorId(id);
         await this.produtorRuralRepository.delete(id);
     }
 

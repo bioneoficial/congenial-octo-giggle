@@ -20,4 +20,8 @@ export class FazendaService {
             produtor_id: fazendaData.produtorId
         });
     }
+
+    public async deleteByProdutorId(produtorId: number): Promise<void> {
+        return this.fazendaRepository.deleteByProdutorId(produtorId);
+    }
 }

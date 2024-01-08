@@ -79,7 +79,7 @@ export class ProdutorRuralRepository {
     }
 
     public async delete(id: number): Promise<void> {
-        const query = 'DELETE FROM produtores_rurais WHERE id = $1;';
+        const query = 'UPDATE produtores_rurais SET deleted_at = NOW() WHERE id = $1;';
         await this.db.executeQuery(query, [id]);
     }
 
