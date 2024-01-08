@@ -1,4 +1,4 @@
-import {IProdutorRural} from '../models/produtorRuralModel';
+import {IGetProdutorRural, IProdutorRural} from '../models/produtorRuralModel';
 import Database from '../config/dbConfig';
 import {ResourceNotFoundError} from "../errors/resourceNotFoundError";
 
@@ -9,19 +9,58 @@ export class ProdutorRuralRepository {
         this.db = Database.getInstance();
     }
 
-    public async findAll(): Promise<IProdutorRural[]> {
-        const query = 'SELECT * FROM produtores_rurais;';
+    public async findAll(): Promise<IGetProdutorRural[]> {
+        const query = `
+            SELECT pr.id,
+                   pr.cpf_cnpj,
+                   pr.nome,
+                   pr.created_at,
+                   pr.updated_at,
+                   faz.id                         AS idFazenda,
+                   faz.nome                       AS nomeFazenda,
+                   faz.cidade,
+                   faz.estado,
+                   faz.area_total_hectares        AS areaTotalHectares,
+                   faz.area_agricultavel_hectares AS areaAgricultavelHectares,
+                   faz.area_vegetacao_hectares    AS areaVegetacaoHectares,
+                   ARRAY_AGG(cf.cultura_id)       AS culturas
+            FROM produtores_rurais AS pr
+                     LEFT JOIN fazendas AS faz ON pr.id = faz.produtor_id
+                     LEFT JOIN culturas_fazenda AS cf ON faz.id = cf.fazenda_id
+            WHERE pr.deleted_at IS NULL
+            GROUP BY pr.id, faz.id
+        `;
         const rows = await this.db.executeQuery(query);
-        return rows as IProdutorRural[];
+        return rows as IGetProdutorRural[];
     }
 
-    public async findById(id: number): Promise<IProdutorRural | null> {
-        const query = 'SELECT * FROM produtores_rurais WHERE id = $1;';
+    public async findById(id: number): Promise<IGetProdutorRural | null> {
+        const query = `
+            SELECT pr.id,
+                   pr.cpf_cnpj,
+                   pr.nome,
+                   pr.created_at,
+                   pr.updated_at,
+                   faz.id                         AS idFazenda,
+                   faz.nome                       AS nomeFazenda,
+                   faz.cidade,
+                   faz.estado,
+                   faz.area_total_hectares        AS areaTotalHectares,
+                   faz.area_agricultavel_hectares AS areaAgricultavelHectares,
+                   faz.area_vegetacao_hectares    AS areaVegetacaoHectares,
+                   ARRAY_AGG(cf.cultura_id)       AS culturas
+            FROM produtores_rurais AS pr
+                     LEFT JOIN fazendas AS faz ON pr.id = faz.produtor_id
+                     LEFT JOIN culturas_fazenda AS cf ON faz.id = cf.fazenda_id
+            WHERE pr.deleted_at IS NULL
+              AND pr.id = $1
+            GROUP BY pr.id, faz.id
+        `;
         const rows = await this.db.executeQuery(query, [id]);
         if (rows.length === 0) {
             throw new ResourceNotFoundError(`ProdutorRural with id ${id} not found`);
         }
-        return rows[0] as IProdutorRural;
+        return rows[0] as IGetProdutorRural;
     }
 
     public async create(produtor: IProdutorRural): Promise<IProdutorRural> {

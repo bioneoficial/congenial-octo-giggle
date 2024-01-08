@@ -1,4 +1,4 @@
-import {IProdutorRural, IProdutorRuralPost} from '../models/produtorRuralModel';
+import {IProdutorRural, IGetProdutorRural, IProdutorRuralPost} from '../models/produtorRuralModel';
 import {ProdutorRuralRepository} from '../repositories/produtorRuralRepository';
 import {FazendaService} from "./fazendaService";
 import {CulturaService} from "./culturaService";
@@ -15,11 +15,11 @@ export class ProdutorRuralService {
         this.culturaService = new CulturaService();
     }
 
-    public async findAllProdutores(): Promise<IProdutorRural[]> {
+    public async findAllProdutores(): Promise<IGetProdutorRural[]> {
         return this.produtorRuralRepository.findAll();
     }
 
-    public async findProdutorById(id: number): Promise<IProdutorRural | null> {
+    public async findProdutorById(id: number): Promise<IGetProdutorRural | null> {
         return this.produtorRuralRepository.findById(id);
     }
 
