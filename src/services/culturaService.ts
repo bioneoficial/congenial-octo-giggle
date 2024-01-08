@@ -15,4 +15,12 @@ export class CulturaService {
 
         await this.culturaRepository.linkToFazenda(fazendaId, culturaId);
     }
+
+    public async updateFazendaCulturas(fazendaId: number, culturas: number[]): Promise<void> {
+        await this.culturaRepository.removeByFazendaId(fazendaId);
+
+        for (const culturaId of culturas) {
+            await this.linkFazendaToCultura(fazendaId, culturaId);
+        }
+    }
 }

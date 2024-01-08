@@ -170,6 +170,58 @@ export const swaggerDefinition = {
                     }
                 },
             },
+            IProdutorRuralPut: {
+                type: 'object',
+                properties: {
+                    produtorId: {
+                        type: 'integer',
+                        example: 1
+                    },
+                    cpf_cnpj: {
+                        type: 'string',
+                        example: '123.456.789-00'
+                    },
+                    nome: {
+                        type: 'string',
+                        example: 'New Produtor Name'
+                    },
+                    nomeFazenda: {
+                        type: 'string',
+                        example: 'New Fazenda Name'
+                    },
+                    fazendaId: {
+                        type: 'integer',
+                        example: 1
+                    },
+                    cidade: {
+                        type: 'string',
+                        example: 'New City'
+                    },
+                    estado: {
+                        type: 'string',
+                        example: 'New State'
+                    },
+                    areaTotalHectares: {
+                        type: 'number',
+                        example: 1000
+                    },
+                    areaAgricultavelHectares: {
+                        type: 'number',
+                        example: 700
+                    },
+                    areaVegetacaoHectares: {
+                        type: 'number',
+                        example: 300
+                    },
+                    culturas: {
+                        type: 'array',
+                        items: {
+                            type: 'integer'
+                        },
+                        example: [1, 2, 3]
+                    }
+                },
+            }
         },
     },
 }

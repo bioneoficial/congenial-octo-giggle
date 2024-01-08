@@ -1,6 +1,6 @@
 import {NextFunction, Request, Response} from 'express';
 import {ProdutorRuralService} from '../services/produtorRuralService';
-import {validateParamsGetById, validateProdutorRuralPost} from "../validators/produtorRural";
+import {validateParamsGetById, validateProdutorRuralPost, validateProdutorRuralPut} from "../validators/produtorRural";
 import {CustomError} from "../errors/customError";
 import {IGetProdutorRural} from "../models/produtorRuralModel";
 
@@ -44,6 +44,16 @@ export const deleteProdutorById = async (req: Request, res: Response, next: Next
         await produtorRuralService.deleteProdutor(id);
         res.json({ message: `Produtor with id ${id} was successfully deleted`});
     } catch (error: any) {
+        next(error);
+    }
+};
+
+export const updateProdutorRural = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+        const validatedData = validateProdutorRuralPut(req.body);
+        const updatedProdutorRural = await produtorRuralService.updateProdutor(validatedData);
+        res.status(200).json(updatedProdutorRural);
+    } catch (error: unknown) {
         next(error);
     }
 };

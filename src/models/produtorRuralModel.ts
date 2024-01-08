@@ -53,3 +53,17 @@ export interface IFazenda {
     updated_at?: Date;
     deleted_at?: Date | null;
 }
+
+export interface IProdutorRuralPut {
+    produtorId: number;
+    cpf_cnpj: string;
+    nome: string;
+    nomeFazenda: string;
+    fazendaId: number;
+    cidade: string;
+    estado: string;
+    areaTotalHectares: number;
+    areaAgricultavelHectares: number;
+    areaVegetacaoHectares: number;
+    culturas: number[];
+}

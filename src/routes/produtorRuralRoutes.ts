@@ -3,7 +3,7 @@ import {
     createProdutorRural,
     deleteProdutorById,
     getAllProdutores,
-    getProdutorById
+    getProdutorById, updateProdutorRural
 } from '../controllers/produtorRuralController';
 import {QueueService} from "../services/queueService";
 
@@ -284,4 +284,77 @@ router.post('/produtorRural', createProdutorRural);
  *                   description: the error message
  */
 router.delete('/:id', deleteProdutorById);
+
+/**
+ * @swagger
+ * /produtores-rurais:
+ *   put:
+ *     tags:
+ *       - Producers
+ *     summary: Update a producer details
+ *     description: Update a producer's details and related entities - Fazendas and Culturas.
+ *     requestBody:
+ *       description: New details for the producer
+ *       required: true
+ *       content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/IProdutorRuralPut'
+ *     responses:
+ *       200:
+ *         description: Successfully updated the producer's details.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/GetProdutorRural'
+ *       400:
+ *         description: Bad request.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: object
+ *                   properties:
+ *                     status:
+ *                       type: integer
+ *                       description: HTTP status code
+ *                     message:
+ *                       type: string
+ *                       description: the error message
+ *       404:
+ *         description: Not found. The requested resource could not be found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: object
+ *                   properties:
+ *                     status:
+ *                       type: integer
+ *                       description: HTTP status code
+ *                     message:
+ *                       type: string
+ *                       description: the error message
+ *       500:
+ *         description: Internal server error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: object
+ *                   properties:
+ *                     status:
+ *                       type: integer
+ *                       description: HTTP status code
+ *                     message:
+ *                       type: string
+ *                       description: the error message
+ */
+ router.put('/', updateProdutorRural);
 export default router;

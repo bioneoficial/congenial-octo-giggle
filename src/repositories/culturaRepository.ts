@@ -22,4 +22,9 @@ export class CulturaRepository {
         const query = 'INSERT INTO culturas_fazenda (fazenda_id, cultura_id) VALUES ($1, $2)';
         await this.db.executeQuery(query, [fazendaId, culturaId]);
     }
+
+    public async removeByFazendaId(fazendaId: number): Promise<void> {
+        const query = 'DELETE FROM culturas_fazenda WHERE fazenda_id = $1;';
+        await this.db.executeQuery(query, [fazendaId]);
+    }
 }

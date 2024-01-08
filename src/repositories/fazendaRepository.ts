@@ -18,4 +18,16 @@ export class FazendaRepository {
         const query = 'UPDATE fazendas SET deleted_at = NOW() WHERE produtor_id = $1;';
         await this.db.executeQuery(query, [produtorId]);
     }
+
+    public async update(fazendaId: number, fazendaData: { [key: string]: any }): Promise<void> {
+        const entries = Object.entries(fazendaData);
+        const updates = entries.map(([column, value], index) => `"${column}" = $${index + 1}`).join(', ');
+        const values = entries.map(([, value]) => value);
+
+        const query = `UPDATE fazendas
+                       SET ${updates}
+                       WHERE id = ${fazendaId}`;
+
+        await this.db.executeQuery(query, values);
+    }
 }

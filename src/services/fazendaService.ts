@@ -24,4 +24,8 @@ export class FazendaService {
     public async deleteByProdutorId(produtorId: number): Promise<void> {
         return this.fazendaRepository.deleteByProdutorId(produtorId);
     }
+
+    public async updateFazenda(fazendaId: number, fazendaData: { [key: string]: any }): Promise<any> {
+        return this.fazendaRepository.update(fazendaId, fazendaData);
+    }
 }

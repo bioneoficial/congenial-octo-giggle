@@ -1,4 +1,4 @@
-import {IProdutorRural, IGetProdutorRural, IProdutorRuralPost} from '../models/produtorRuralModel';
+import {IProdutorRural, IGetProdutorRural, IProdutorRuralPost, IProdutorRuralPut} from '../models/produtorRuralModel';
 import {ProdutorRuralRepository} from '../repositories/produtorRuralRepository';
 import {FazendaService} from "./fazendaService";
 import {CulturaService} from "./culturaService";
@@ -65,8 +65,24 @@ export class ProdutorRuralService {
             }
     }
 
-    public async updateProdutor(id: number, produtorData: IProdutorRural): Promise<IProdutorRural | null> {
-        return this.produtorRuralRepository.update(id, produtorData);
+    public async updateProdutor(produtorData: IProdutorRuralPut): Promise<IGetProdutorRural | null> {
+        const produtorRural = await this.produtorRuralRepository.update(produtorData.produtorId, {
+            cpf_cnpj: produtorData.cpf_cnpj,
+            nome: produtorData.nome
+        });
+
+        const fazenda = await this.fazendaService.updateFazenda(produtorData.fazendaId, {
+            nome: produtorData.nomeFazenda,
+            cidade: produtorData.cidade,
+            estado: produtorData.estado,
+            area_total_hectares: produtorData.areaTotalHectares,
+            area_agricultavel_hectares: produtorData.areaAgricultavelHectares,
+            area_vegetacao_hectares: produtorData.areaVegetacaoHectares
+        });
+
+        await this.culturaService.updateFazendaCulturas(produtorData.fazendaId, produtorData.culturas);
+
+        return this.produtorRuralRepository.findById(produtorData.produtorId);
     }
 
     public async deleteProdutor(id: number): Promise<void> {
