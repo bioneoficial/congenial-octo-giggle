@@ -31,10 +31,17 @@ export class FazendaRepository {
         await this.db.executeQuery(query, values);
     }
 
-    public async getGraphicData(): Promise<{ fazendaCount: number, totalArea: number }> {
-        const rows = await this.db.executeQuery('SELECT COUNT(*) as fazendacount, SUM(area_total_hectares) as totalarea FROM fazendas');
+    public async getGraphicData(): Promise<{ fazendaCount: number, totalArea: number, totalAgricutavel: number, totalVegetavel: number }> {
+        const query = `SELECT COUNT(*) as fazendacount, SUM(area_total_hectares) as totalarea, 
+                     SUM(area_agricultavel_hectares) as totalagricutavel, 
+                     SUM(area_vegetacao_hectares) as totalvegetavel 
+                     FROM fazendas`;
+        const rows = await this.db.executeQuery(query);
         return {
-            fazendaCount: Number(rows[0].fazendacount), totalArea: Number(rows[0].totalarea)
+            fazendaCount: Number(rows[0].fazendacount),
+            totalArea: Number(rows[0].totalarea),
+            totalAgricutavel: Number(rows[0].totalagricutavel),
+            totalVegetavel: Number(rows[0].totalvegetavel)
         };
     }
 

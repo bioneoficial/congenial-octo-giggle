@@ -29,7 +29,7 @@ export class FazendaService {
         return await this.fazendaRepository.update(fazendaId, fazendaData);
     }
 
-    public async getFazendaGraphicData(): Promise<{ fazendaCount: number, totalArea: number }> {
+    public async getFazendaGraphicData(): Promise<{ fazendaCount: number, totalArea: number, totalAgricutavel: number, totalVegetavel: number }> {
         return await this.fazendaRepository.getGraphicData();
     }
 

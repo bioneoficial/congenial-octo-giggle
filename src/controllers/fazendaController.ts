@@ -22,12 +22,12 @@ class FazendaController {
      *   get:
      *     tags:
      *       - Graphics
-     *     description: Get count of fazendas and the total area
+     *     description: Get count of fazendas, total area, total agricultable and total vegetation area
      *     produces:
      *       - application/json
      *     responses:
      *       200:
-     *         description: Successfully fetched the fazenda data
+     *         description: Successfully fetched the fazenda graphic data
      *         content:
      *           application/json:
      *             schema:
@@ -37,9 +37,15 @@ class FazendaController {
      *                   type: number
      *                 totalArea:
      *                   type: number
+     *                 totalAgricutavel:
+     *                   type: number
+     *                 totalVegetavel:
+     *                   type: number
      *             example:
-     *               fazendaCount: 1
-     *               totalArea: 1
+     *               fazendaCount: 4
+     *               totalArea: 3000
+     *               totalAgricutavel: 1700
+     *               totalVegetavel: 1300
      */
     getFazendaGraphicData = async (req: Request, res: Response, next: NextFunction) => {
         try {
