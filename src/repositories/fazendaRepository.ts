@@ -30,4 +30,11 @@ export class FazendaRepository {
 
         await this.db.executeQuery(query, values);
     }
+
+    public async getGraphicData(): Promise<{ fazendaCount: number, totalArea: number }> {
+        const rows = await this.db.executeQuery('SELECT COUNT(*) as fazendacount, SUM(area_total_hectares) as totalarea FROM fazendas');
+        return {
+            fazendaCount: Number(rows[0].fazendacount), totalArea: Number(rows[0].totalarea)
+        };
+    }
 }

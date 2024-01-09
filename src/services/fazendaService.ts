@@ -1,5 +1,5 @@
-import { FazendaRepository } from '../repositories/fazendaRepository';
-import {IFazenda } from '../models/produtorRuralModel';
+import {FazendaRepository} from '../repositories/fazendaRepository';
+import {IFazenda} from '../models/produtorRuralModel';
 
 export class FazendaService {
     private fazendaRepository: FazendaRepository;
@@ -27,5 +27,10 @@ export class FazendaService {
 
     public async updateFazenda(fazendaId: number, fazendaData: { [key: string]: any }): Promise<any> {
         return this.fazendaRepository.update(fazendaId, fazendaData);
+    }
+
+    public async getFazendaGraphicData(): Promise<{ fazendaCount: number, totalArea: number }> {
+        const graphicData = await this.fazendaRepository.getGraphicData();
+        return graphicData;
     }
 }
