@@ -98,6 +98,7 @@ export class ProdutorRuralService {
         } catch (error) {
             throw error;
         }
+        // Here i would implement cpf-cnpj-validator or external API but i won't do that now because i'm with no time.
     }
 
     private async cpfCnpjExists(cpfCnpj: string): Promise<boolean> {
