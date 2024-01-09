@@ -223,5 +223,16 @@ export const swaggerDefinition = {
                 },
             }
         },
+            FazendaEstadoCount: {
+                type: 'object',
+                properties: {
+                    estado: {
+                        type: 'string',
+                    },
+                    count: {
+                        type: 'number',
+                    },
+                },
+            },
     },
 }

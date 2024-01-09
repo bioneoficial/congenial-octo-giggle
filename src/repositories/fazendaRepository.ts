@@ -37,4 +37,9 @@ export class FazendaRepository {
             fazendaCount: Number(rows[0].fazendacount), totalArea: Number(rows[0].totalarea)
         };
     }
+
+    public async getFazendaCountByEstado(): Promise<{estado: string, count: number}[]> {
+        const result = await this.db.executeQuery('SELECT estado, COUNT(*) as count FROM fazendas GROUP BY estado');
+        return result.map((item: { estado: any; count: any; }) => ({estado: item.estado, count: Number(item.count)}));
+    }
 }

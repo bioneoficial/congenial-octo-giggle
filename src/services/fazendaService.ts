@@ -22,14 +22,18 @@ export class FazendaService {
     }
 
     public async deleteByProdutorId(produtorId: number): Promise<void> {
-        return this.fazendaRepository.deleteByProdutorId(produtorId);
+        return await this.fazendaRepository.deleteByProdutorId(produtorId);
     }
 
     public async updateFazenda(fazendaId: number, fazendaData: { [key: string]: any }): Promise<any> {
-        return this.fazendaRepository.update(fazendaId, fazendaData);
+        return await this.fazendaRepository.update(fazendaId, fazendaData);
     }
 
     public async getFazendaGraphicData(): Promise<{ fazendaCount: number, totalArea: number }> {
         return await this.fazendaRepository.getGraphicData();
+    }
+
+    async getFazendaCountByEstado() {
+        return await this.fazendaRepository.getFazendaCountByEstado()
     }
 }

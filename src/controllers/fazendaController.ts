@@ -24,13 +24,18 @@ class FazendaController {
      *     responses:
      *       200:
      *         description: Successfully fetched the fazenda data
-     *         schema:
-     *           type: object
-     *           properties:
-     *             fazendaCount:
-     *               type: number
-     *             totalArea:
-     *               type: number
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 fazendaCount:
+     *                   type: number
+     *                 totalArea:
+     *                   type: number
+     *             example:
+     *               fazendaCount: 1
+     *               totalArea: 1
      */
     getFazendaGraphicData = async (req: Request, res: Response, next: NextFunction) => {
         try {
@@ -41,8 +46,46 @@ class FazendaController {
         }
     }
 
+    /**
+     * @swagger
+     * /fazenda/getFazendaCountByEstado:
+     *   get:
+     *     tags:
+     *       - Graphics
+     *     description: Get count of fazendas by estado
+     *     produces:
+     *       - application/json
+     *     responses:
+     *       200:
+     *         description: Count of fazendas per estado
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: array
+     *               items:
+     *                 $ref: '#/components/schemas/FazendaEstadoCount'
+     * components:
+     *   schemas:
+     *     FazendaEstadoCount:
+     *       type: object
+     *       properties:
+     *         estado:
+     *           type: string
+     *         count:
+     *           type: number
+     */
+    getFazendaCountByEstado = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const estadoData = await this.fazendaService.getFazendaCountByEstado();
+            res.json(estadoData);
+        } catch (error: any) {
+            next(error);
+        }
+    }
+
     private initializeRoutes() {
         this.router.get('/getFazendaGraphicData', this.getFazendaGraphicData);
+        this.router.get('/getFazendaCountByEstado', this.getFazendaCountByEstado);
     }
 }
 
