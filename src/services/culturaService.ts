@@ -23,4 +23,8 @@ export class CulturaService {
             await this.linkFazendaToCultura(fazendaId, culturaId);
         }
     }
+
+    public async getFazendaCountByCultura(): Promise<any[]> {
+        return await this.culturaRepository.getFazendaCountByCultura();
+    }
 }
