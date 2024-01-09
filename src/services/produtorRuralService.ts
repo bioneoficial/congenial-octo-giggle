@@ -6,21 +6,23 @@ import {CustomError} from "../errors/customError";
 import {QueueService} from "./queueService";
 
 export class ProdutorRuralService {
-    private produtorRuralRepository: ProdutorRuralRepository;
-    private fazendaService: FazendaService;
-    private culturaService: CulturaService;
-    private queueService: QueueService;
+    produtorRuralRepository: ProdutorRuralRepository;
+    fazendaService: FazendaService;
+    culturaService: CulturaService;
+    queueService: QueueService;
 
     constructor() {
         this.produtorRuralRepository = new ProdutorRuralRepository();
         this.fazendaService = new FazendaService();
         this.culturaService = new CulturaService();
         this.queueService = new QueueService();
-        this.queueService.init().then(() => {
-            console.log('QueueService initialized');
-        }).catch(err => {
-            console.error('Failed to initialize QueueService:', err);
-        });
+        if (process.env.NODE_ENV !== 'test') {
+            this.queueService.init().then(() => {
+                console.log('QueueService initialized');
+            }).catch(err => {
+                console.error('Failed to initialize QueueService:', err);
+            });
+        }
     }
 
     public async findAllProdutores(): Promise<IGetProdutorRural[]> {
