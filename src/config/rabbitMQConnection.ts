@@ -31,7 +31,7 @@ export class RabbitMQConnection {
             console.log('Connected to RabbitMQ');
         } catch (error) {
             console.error(`Error connecting to RabbitMQ: ${error}`);
-            console.log(`Retrying in ${10000 / 1000} seconds...`);
+            console.info(`Retrying in ${10000 / 1000} seconds...`);
             setTimeout(() => this.connect(), 10000);
         }
     }

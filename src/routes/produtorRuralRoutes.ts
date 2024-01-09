@@ -5,16 +5,8 @@ import {
     getAllProdutores,
     getProdutorById, updateProdutorRural
 } from '../controllers/produtorRuralController';
-import {QueueService} from "../services/queueService";
 
 const router: Router = express.Router();
-const queueService = new QueueService();
-
-queueService.init().then(() => {
-    console.log('QueueService initialized');
-}).catch(err => {
-    console.error('Failed to initialize QueueService:', err);
-});
 
 /**
  * @swagger

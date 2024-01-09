@@ -3,16 +3,24 @@ import {ProdutorRuralRepository} from '../repositories/produtorRuralRepository';
 import {FazendaService} from "./fazendaService";
 import {CulturaService} from "./culturaService";
 import {CustomError} from "../errors/customError";
+import {QueueService} from "./queueService";
 
 export class ProdutorRuralService {
     private produtorRuralRepository: ProdutorRuralRepository;
     private fazendaService: FazendaService;
     private culturaService: CulturaService;
+    private queueService: QueueService;
 
     constructor() {
         this.produtorRuralRepository = new ProdutorRuralRepository();
         this.fazendaService = new FazendaService();
         this.culturaService = new CulturaService();
+        this.queueService = new QueueService();
+        this.queueService.init().then(() => {
+            console.log('QueueService initialized');
+        }).catch(err => {
+            console.error('Failed to initialize QueueService:', err);
+        });
     }
 
     public async findAllProdutores(): Promise<IGetProdutorRural[]> {
@@ -25,7 +33,6 @@ export class ProdutorRuralService {
 
     public async createProdutor(produtorData: IProdutorRuralPost): Promise<IProdutorRural | undefined> {
         try {
-            console.log(produtorData)
              await this.validateCreateProdutorData(produtorData);
 
             const produtorRural = await this.produtorRuralRepository.create({
@@ -46,6 +53,12 @@ export class ProdutorRuralService {
             for (const culturaId of produtorData.culturas) {
                 await this.culturaService.linkFazendaToCultura(fazenda.id, culturaId);
             }
+
+            const message = {
+                fazendaId: fazenda.id,
+                culturaIds: produtorData.culturas
+            };
+            await this.queueService.sendMessage("CulturaLinkingQueue", JSON.stringify(message));
 
             return produtorRural;
         } catch (error) {
